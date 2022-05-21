@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+	<TestRunParameters>
+		
+		<!-- environment value should be CI or QA or STG   -->
+		<Parameter name="environment" value="QA" />
+		
+		<!-- browser value should be chrome or firefox or edge   -->
+		<Parameter name="browser" value="chrome" />
+	
+	</TestRunParameters>
+</RunSettings>
+

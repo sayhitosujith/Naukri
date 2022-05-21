@@ -1,0 +1,81 @@
+# ASP.NET Core (.NET Framework)
+# Build and test ASP.NET Core projects targeting the full .NET Framework.
+# Add steps that publish symbols, save build artifacts, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/dotnet-core
+
+parameters:
+- name: category
+  displayName: 'Category'
+  type: string
+  default: admin
+- name: browser
+  displayName: 'Browser'
+  default: chrome
+  values:
+  - chrome
+  - firefox
+  - edge
+- name: environment
+  displayName: 'Environment'
+  default: QA
+  values:
+  - CI
+  - QA
+  - STG
+  - Preprod
+
+trigger:
+- none
+
+jobs:
+- job: UIAutomation
+  timeoutInMinutes: 120
+  pool:
+    vmImage: 'windows-latest'
+
+  variables:
+    solution: '**/*.sln'
+    buildPlatform: 'Any CPU'
+    buildConfiguration: 'Release'
+
+  steps:
+
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: |
+        Write-Host "Setting Display Resolution"
+        Set-DisplayResolution -Width 1920 -Height 1080 -Force
+
+  - task: NuGetToolInstaller@1
+
+  - task: NuGetCommand@2
+    inputs:
+      restoreSolution: '$(solution)'
+
+  - task: VSBuild@1
+    inputs:
+      solution: '$(solution)'
+      msbuildArgs: '/p:DeployOnBuild=true /p:WebPublishMethod=Package /p:PackageAsSingleFile=true /p:SkipInvalidConfigurations=true /p:DesktopBuildPackageLocation="$(build.artifactStagingDirectory)\WebApp.zip" /p:DeployIisAppPath="Default Web Site"'
+      platform: '$(buildPlatform)'
+      configuration: '$(buildConfiguration)'
+
+  - task: VSTest@2  
+    inputs:
+      testSelector: 'testAssemblies'
+      testAssemblyVer2: '**\bin\Release\EngageAutomation.dll'
+      searchFolder: '$(System.DefaultWorkingDirectory)'
+      testFiltercriteria: 'TestCategory= ${{parameters.category}}'
+      runSettingsFile: 'EngageAutomation\Settings.runsettings'
+      overrideTestrunParameters: '-environment ${{parameters.environment}} -browser ${{parameters.browser}}'
+      publishRunAttachments: true
+      rerunFailedTests: true
+      rerunType: 'basedOnTestFailureCount'
+      rerunFailedTestCasesMaxLimit: '1'
+      rerunMaxAttempts: '3'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: 'EngageAutomation\bin\TestReports'
+      artifactName: report    
+    condition: succeededOrFailed()

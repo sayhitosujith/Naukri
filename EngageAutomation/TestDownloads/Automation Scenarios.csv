@@ -1,0 +1,27 @@
+﻿Browser,Version Number,,,
+Chrome,84.0.5,,,
+Edge,84.0.4,,,
+,,,,
+Name,Description,,,
+SmokeTestcase1,Reference Templates Screen as Template Author - DONE,,,
+SmokeTestcase2,Customize Country Template Screen as Affiliate Editor – DONE,,,
+SmokeTestcase3,View single country Requirements as Viewer - DONE,,,
+SmokeTestcase4,Multi country view Functionality - Country Template - DONE,,,
+,,,,
+Sl No,Reference Templates Screen as Template Author,Customize Country Template Screen as Affiliate Editor ,View single country Requirements as Viewer ,Multi country view Functionality - Country Template 
+Step1,Login as Template Author1,Login as Affiliate Editor1,Login as Viewer1,Login as Viewer1
+Step2,Click on Reference Template Button in Home screen,Click on Country Template Button in Home screen,Click on View Requirements Button in Home screen,Click on View Requirements Button in Home screen
+Step3,"Select Product Type, section and click GO","Select Product Type, section,country and click GO","Select Product Type, section,country and click GO","Select Product Type, section, Multiple countries and click GO"
+Step4,Checkout,Checkout button in Country Template Screen,Search in View single country Requirement Screen,Click on Last edited Section and Verify the data
+Step5,Add new Section ,Edit Section - Not Required,Export  CSV and save file inside Framework structure,Search in Multi country view Requirement Screen
+Step6,Add new Requirements ,Edit Section - Required,Logout from the Application,Export  CSV and save file inside Framework structure
+Step7,Delete Requirement,Checkin Functionality,, Logout from the Application
+Step8,Checkin,Apply to other countries,,
+Step9,Approve,Publish Template Button in Country Templates page,,
+Step10,Version History,Search in Country Template screen,,
+Step11,Restore Functionality in Reference Template,Logout from the Application,,
+Step12,Undo Checkout,Login to Outlook as Affiliate Editor and check for Approved email,,
+Step13,Search in Reference Template screen,Logout from the Outlook,,
+Step14,Logout from the Application,,,
+Step15,Login to Outlook as Template Author 1 and check for Approved email,,,
+Step16,Logout from the Outlook,,,
